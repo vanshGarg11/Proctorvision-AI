@@ -123,3 +123,13 @@ Example:
 ```text
 VITE_API_URL=https://proctorvision-ai-backend.onrender.com/api
 ```
+
+## Permanent Free Backend Option
+
+If Render asks for payment, deploy the Flask backend on PythonAnywhere and keep the React frontend on Netlify.
+
+Guide:
+
+```text
+docs/PYTHONANYWHERE_DEPLOYMENT.md
+```
