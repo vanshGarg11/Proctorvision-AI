@@ -133,3 +133,22 @@ Guide:
 ```text
 docs/PYTHONANYWHERE_DEPLOYMENT.md
 ```
+
+## Netlify-Only Free Demo Mode
+
+This repository also includes a Netlify Functions API at:
+
+```text
+frontend/netlify/functions/api.js
+```
+
+That means the UI can run fully on Netlify without Flask hosting. This mode is useful for final-year demos when a free Python backend host is not available.
+
+Limitations of Netlify-only mode:
+
+- Uses seeded demo users and in-memory demo data.
+- Data resets when serverless functions restart.
+- OpenCV face detection is not available inside Netlify Functions.
+- Browser monitoring warnings still work.
+
+For full AI/OpenCV behavior, run or deploy the Flask backend separately.

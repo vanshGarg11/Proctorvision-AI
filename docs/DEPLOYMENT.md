@@ -117,6 +117,40 @@ Action: Rewrite
 - SQLite works for demos, but Render disk storage can be temporary unless you configure persistent disks. For a real deployment, use PostgreSQL/MySQL.
 - Screenshots saved in `backend/static/screenshots` are suitable for demos only. Use cloud storage for production.
 
+## Netlify-Only Free Demo
+
+If you want to use Netlify for everything, this repo includes a Netlify Functions API:
+
+```text
+frontend/netlify/functions/api.js
+```
+
+Netlify settings:
+
+```text
+Base directory: frontend
+Build command: npm install && npm run build
+Publish directory: dist
+```
+
+No `VITE_API_URL` is required. The frontend automatically calls:
+
+```text
+/api
+```
+
+Netlify redirects `/api/*` to the serverless function.
+
+This mode supports:
+
+- Login/signup demo
+- Student dashboard
+- Exam loading/submission
+- Browser warning events
+- Admin overview
+
+This mode does not support real Flask/OpenCV processing. Use the Flask backend for full AI detection.
+
 ## MySQL Option
 
 Install a MySQL driver such as `pymysql`, then set:
