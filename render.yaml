@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: proctorvision-ai-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_EXPIRY_HOURS
+        value: 12
+      - key: MAX_WARNINGS
+        value: 5
+
+  - type: web
+    name: proctorvision-ai-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://proctorvision-ai-backend.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -49,6 +49,74 @@ Deploy `frontend/dist` to Netlify, Vercel, Nginx, Apache, or any static host. Se
 VITE_API_URL=https://your-api-domain.com/api
 ```
 
+## Render Deployment
+
+This repository includes `render.yaml` for a Render Blueprint deployment.
+
+### Option A: Render Blueprint
+
+1. Push this project to GitHub.
+2. Open Render Dashboard.
+3. Click **New +**.
+4. Select **Blueprint**.
+5. Connect your GitHub repository.
+6. Render will detect `render.yaml`.
+7. Create both services:
+   - `proctorvision-ai-backend`
+   - `proctorvision-ai-frontend`
+8. After the backend URL is created, update frontend `VITE_API_URL` if your backend service URL is different from:
+
+```bash
+https://proctorvision-ai-backend.onrender.com/api
+```
+
+### Option B: Manual Render Setup
+
+Create backend as **Web Service**:
+
+```text
+Root Directory: backend
+Runtime: Python
+Build Command: pip install -r requirements.txt
+Start Command: gunicorn app:app --bind 0.0.0.0:$PORT
+```
+
+Backend environment variables:
+
+```text
+SECRET_KEY=your-long-random-secret
+JWT_EXPIRY_HOURS=12
+MAX_WARNINGS=5
+```
+
+Create frontend as **Static Site**:
+
+```text
+Root Directory: frontend
+Build Command: npm install && npm run build
+Publish Directory: dist
+```
+
+Frontend environment variable:
+
+```text
+VITE_API_URL=https://your-backend-service-name.onrender.com/api
+```
+
+Add this rewrite rule for React Router:
+
+```text
+Source: /*
+Destination: /index.html
+Action: Rewrite
+```
+
+### Render Notes
+
+- Free Render services can sleep after inactivity, so the first login request may take extra time.
+- SQLite works for demos, but Render disk storage can be temporary unless you configure persistent disks. For a real deployment, use PostgreSQL/MySQL.
+- Screenshots saved in `backend/static/screenshots` are suitable for demos only. Use cloud storage for production.
+
 ## MySQL Option
 
 Install a MySQL driver such as `pymysql`, then set:

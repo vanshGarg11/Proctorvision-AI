@@ -108,3 +108,18 @@ Confidence is estimated from detection count and bounding box size. Suspicious e
 ## Notes
 
 This project is production-structured for academic demonstration. For real deployments, add HTTPS, camera consent policy, stronger identity verification, rate limiting, secure JWT secret management, background task processing, object storage for screenshots, and human review policies.
+
+## Deploy On Render
+
+This repo includes `render.yaml`.
+
+1. Push the project to GitHub.
+2. In Render, create a new Blueprint from the GitHub repo.
+3. Deploy both services.
+4. Set frontend `VITE_API_URL` to your backend URL plus `/api`.
+
+Example:
+
+```text
+VITE_API_URL=https://proctorvision-ai-backend.onrender.com/api
+```
