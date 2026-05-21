@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+node_modules/
+dist/
+backend/database/*.db
+backend/static/screenshots/*.jpg
+backend/static/screenshots/*.jpeg
+backend/static/screenshots/*.png

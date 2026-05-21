@@ -1,0 +1,70 @@
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(160) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'student',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE exams (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(180) NOT NULL,
+  description TEXT,
+  duration_minutes INTEGER NOT NULL DEFAULT 30,
+  max_warnings INTEGER NOT NULL DEFAULT 5,
+  is_active BOOLEAN DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE questions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  exam_id INTEGER NOT NULL,
+  text TEXT NOT NULL,
+  option_a VARCHAR(255) NOT NULL,
+  option_b VARCHAR(255) NOT NULL,
+  option_c VARCHAR(255) NOT NULL,
+  option_d VARCHAR(255) NOT NULL,
+  correct_option VARCHAR(1) NOT NULL,
+  marks INTEGER DEFAULT 1,
+  FOREIGN KEY (exam_id) REFERENCES exams(id)
+);
+
+CREATE TABLE results (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  exam_id INTEGER NOT NULL,
+  score INTEGER NOT NULL DEFAULT 0,
+  total_marks INTEGER NOT NULL DEFAULT 0,
+  percentage FLOAT NOT NULL DEFAULT 0,
+  answers_json TEXT DEFAULT '{}',
+  auto_submitted BOOLEAN DEFAULT 0,
+  submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (exam_id) REFERENCES exams(id)
+);
+
+CREATE TABLE warnings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  exam_id INTEGER NOT NULL,
+  warning_type VARCHAR(60) NOT NULL,
+  message VARCHAR(255) NOT NULL,
+  confidence FLOAT DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (exam_id) REFERENCES exams(id)
+);
+
+CREATE TABLE cheating_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  exam_id INTEGER NOT NULL,
+  event_type VARCHAR(80) NOT NULL,
+  description TEXT NOT NULL,
+  screenshot_path VARCHAR(255),
+  confidence FLOAT DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (exam_id) REFERENCES exams(id)
+);

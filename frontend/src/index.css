@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f6f7fb;
+}
+
+.dark body {
+  background: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.25);
+}
+
+@layer components {
+  .auth-panel {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 12%, rgba(16, 185, 129, 0.22), transparent 28%),
+      radial-gradient(circle at 82% 76%, rgba(59, 130, 246, 0.18), transparent 30%),
+      linear-gradient(135deg, #020617 0%, #0f172a 54%, #111827 100%);
+  }
+
+  .auth-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.09) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, black, transparent 86%);
+  }
+
+  .glass-card {
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    background: rgba(255, 255, 255, 0.84);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.14);
+  }
+
+  .dark .glass-card {
+    border-color: rgba(51, 65, 85, 0.9);
+    background: rgba(15, 23, 42, 0.76);
+  }
+
+  .input-field {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(203, 213, 225);
+    background: rgba(255, 255, 255, 0.88);
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .input-field:focus {
+    border-color: rgb(5, 150, 105);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.13);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 16px 34px rgba(5, 150, 105, 0.28);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 42px rgba(5, 150, 105, 0.34);
+    filter: brightness(1.04);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .hover-lift {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 58px rgba(15, 23, 42, 0.14);
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+
+  .scan-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-card::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 28%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.9), transparent);
+    animation: scan 2.4s ease-in-out infinite;
+  }
+}
